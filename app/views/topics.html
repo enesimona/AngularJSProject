@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>IT Forum</title>
+         <style type="text/css">
+        
+        #thNume, #thCategorie, #thOperatii{
+            color:yellow;
+        }
+        
+        
+        table
+        {
+            table-layout: fixed;
+            width: 500px;
+        }
+    
+
+        .rwd-table {
+          margin: 1em 0;
+          min-width: 300px;
+  
+          tr {
+            border-top: 1px solid #ddd;
+            border-bottom: 1px solid #ddd;
+          }
+  
+          th {
+            display: none;    
+          }
+  
+          td {
+            display: block; 
+    
+            &:first-child {
+            padding-top: .5em;
+          }
+            &:last-child {
+              padding-bottom: .5em;
+          }
+
+            &:before {
+              font-weight: bold;
+              width: 6.5em; 
+              display: inline-block;
+            }
+        }
+  
+          th, td {
+            text-align: left;
+         }
+  
+  
+        }
+
+
+            body {
+  padding: 0 2em;
+  font-family: Montserrat, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  color: #444;
+  background: #eee;
+}
+
+h1 {
+  font-weight: normal;
+  letter-spacing: -1px;
+  color: #34495E;
+}
+
+.rwd-table {
+  background: #34495E;
+  color: #ff00fa;
+  border-radius: .4em;
+  overflow: hidden;
+  tr {
+    border-color: lighten(#34495E, 10%);
+  }
+  th, td {
+    margin: .5em 1em;
+   
+  }
+}
+        
+      
+   
+        </style>
+       
+    </head>
+    <body>
+        
+        <h1 id="titleTopics" >IT Forum</h1>
+        <br>
+        <h2 id="subtitleTopics">All topics</h2>
+        <br>
+        <div>
+    <table class="rwd-table">
+        <tr>
+            <th id="thNume">Name</th>
+            <th id="thCategorie">Category</th>
+            <th id="thOperatii">Operations</th>
+        </tr>
+        <tr ng-repeat="topic in topics" ng-include="getTemplate(topic)">
+        </tr>
+    </table>
+    <br>
+    <br>
+    <h4>Fill in the next form to add a new topic:</h4>
+    <br>
+    <form>
+        <label for="topicName">Name</label>
+        <input type="text" id="topic-name" ng-model="a.topic_name" />
+        <label for="Category">Category</label>
+        <select id="ddlViewBy" ng-model="a.category">
+  <option value="Programming language">Programming language</option>
+  <option value="Networking" >Networking</option>
+  <option value="Hardware">Hardware</option>
+  <option value="IT Security">IT Security</option>
+  <option value="Database">Database</option>
+  <option value="Mobile App">Mobile App</option>
+</select>
+
+        <input type="button" value="Add" ng-click="addTopic(a)" />
+    </form>
+    <script type="text/ng-template" id="display">
+        <td>{{topic.topic_name}}</td>
+        <td>{{topic.category}}</td>
+
+        <td>
+            <a ui-sref="questions({id : topic.id})">questions</a>
+            <input type="button" value="delete" ng-click="deleteTopic(topic)" />
+            <input type="button" value="edit" ng-click="editTopic(topic)" />
+        </td>
+    </script>
+    <script type="text/ng-template" id="edit">
+        <td><input type="text" ng-model="topic.topic_name"/></td>
+       //
+        <td>
+            <input type="button" class="editing" value="save" ng-click="saveTopic(topic)"/>
+            <input type="button" class="editing" value="cancel" ng-click="cancelEditing()" />
+        </td>
+    </script>
+</div>
+
+    </body>
+</html>

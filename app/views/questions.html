@@ -1,0 +1,138 @@
+<!DOCTYPE <!DOCTYPE html>
+<html>
+  <head>
+    <title>Questions</title>
+    <style type="text/css">
+
+        table
+        {
+            table-layout: fixed;
+            width: 500px;
+        }
+    
+
+        #rwd-table {
+          margin: 1em 0;
+          min-width: 300px;
+  
+          tr {
+            border-top: 1px solid #ddd;
+            border-bottom: 1px solid #ddd;
+          }
+  
+          th {
+            display: none;    
+          }
+  
+          td {
+            display: block; 
+    
+            &:first-child {
+            padding-top: .5em;
+          }
+            &:last-child {
+              padding-bottom: .5em;
+          }
+
+            &:before {
+              font-weight: bold;
+              width: 6.5em; 
+              display: inline-block;
+            }
+        }
+  
+          th, td {
+            text-align: left;
+         }
+  
+  
+        }
+
+            body {
+  padding: 0 2em;
+  font-family: Montserrat, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  color: #444;
+  background: #eee;
+}
+
+h1 {
+  font-weight: normal;
+  letter-spacing: -1px;
+  color: #34495E;
+}
+
+#rwd-table {
+  background: #34495E;
+  color: #ff00fa;
+  border-radius: .4em;
+  overflow: hidden;
+  tr {
+    border-color: lighten(#34495E, 10%);
+  }
+  th, td {
+    margin: .5em 1em;
+   
+  }
+}
+
+#topic_name_questions{
+  font-size: 40px;
+}
+
+      
+    </style>
+  </head>
+  <body>
+    <div id="topic_name_questions">{{topic.topic_name}}</div>
+    
+    <div>
+  
+  
+  <h3>List of questions</h3>
+  <table class="table table-striped" id="rwd-table">
+    <tr>
+      <th>Title</th>
+      <th>Content</th>
+      <th></th>
+    </tr>
+    <tr ng-repeat="question in questions" ng-include="getTemplate(question)">
+
+    </tr>
+  </table>
+  <h3>Add a question</h3>
+  <form name="addForm">
+    <label for="questionTitle">Title</label>
+    <input type="text" id="question-title" ng-model="question.title" />
+    <label for="questionContent">Content</label>
+    <input type="text" id="question-content" name="questionContent" required minlength="5" ng-model="question.content" />
+    <input type="button" value="Add" ng-click="addQuestion(question)" />
+    <div ng-messages="addForm.questionContent.$error">
+      <div ng-message="required">Content in required</div>
+      <div ng-message="minlength">Content must have at least 5 characters</div>
+    </div>
+  </form>
+  <a ui-sref="topics">back to topics</a>
+  <script type="text/ng-template" id="display">
+    <td>{{question.title}}</td>
+    <td>{{question.content}}</td>
+    <td>
+      <input type="button" value="delete" ng-click="deleteQuestion(question)"/>
+      <input type="button" value="edit" ng-click="editQuestion(question)" />
+    </td>
+  </script>
+  <script type="text/ng-template" id="edit">
+    <td><input type="text" ng-model="question.title" /></td>
+    <td><input type="text" ng-model="question.content" class="form-control"/></td>
+    <td>
+      <input type="button" value="save" ng-click="saveQuestion(question)" />
+      <input type="button" value="cancel" ng-click="cancelEditing()" />
+    </td>
+  </script>
+</div>
+
+    
+  </body>
+</html>
+
